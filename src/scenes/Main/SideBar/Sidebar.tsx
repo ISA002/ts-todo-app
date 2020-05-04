@@ -19,32 +19,32 @@ interface SidebarProps {
 }
 
 const Sidebar = (props: SidebarProps) => {
-  // const todosContainer = React.useMemo(() => {
-  //   if (Object.keys(props.todosStore.getGroups).length > 0) {
-  //     return props.todosStore.getGroups;
-  //   }
-  //   return [{ content: "Empty" }];
-  // }, [props.todosStore.getGroups]);
-
-  // console.log(toJS(todosContainer))
-
-  const _renderTittle = props.todosStore.getGroups.map((todo: any, index) => (
-    <Menu.Item key={`${todo.id}${index}`}>
-      {/* <span>
+  const renderedTitles = React.useMemo(
+    () =>
+      props.todosStore.getGroups.map((todo, index) => (
+        <Menu.Item
+          key={`${todo.id}${index}`}
+          onClick={() => {
+            console.log(todo.id);
+          }}
+        >
+          <span>
             <CalendarOutlined />
             {todo.title}
-          </span> */}
-      <Button
-        style={{
-          borderRadius: "20px",
-          border: "none",
-          float: "right",
-          background: "none",
-        }}
-        icon={<CloseOutlined />}
-      />
-    </Menu.Item>
-  ));
+          </span>
+          <Button
+            style={{
+              borderRadius: "20px",
+              border: "none",
+              float: "right",
+              background: "none",
+            }}
+            icon={<CloseOutlined />}
+          />
+        </Menu.Item>
+      )),
+    [props.todosStore.getGroups]
+  );
 
   return (
     // <Affix offsetTop={55}>
@@ -78,7 +78,7 @@ const Sidebar = (props: SidebarProps) => {
           <PlusOutlined />
           Add group
         </Button>
-        {_renderTittle}
+        {renderedTitles}
       </Menu>
     </Sider>
     // </Affix>

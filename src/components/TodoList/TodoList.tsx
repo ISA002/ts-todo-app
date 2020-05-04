@@ -4,35 +4,33 @@ import { observer, inject } from "mobx-react";
 import { RouteComponentProps } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { toJS } from "mobx";
+import TodosStore from "../../store/stores/todosStore";
 
-interface TodoListProps extends RouteComponentProps {
-  todosStore: any;
+interface TodoListProps {
+  todosStore: TodosStore;
 }
 
 const TodoList = (props: TodoListProps) => {
   const todosContainer = React.useMemo(() => {
     if (
-      props.todosStore.getIdSelectGroup != null &&
-      Object.keys(props.todosStore.groups).length > 0
+      props.todosStore.selectedGroup != null &&
+      !!props.todosStore.getGroups.length
     ) {
-      return props.todosStore.groups[props.todosStore.getIdSelectGroup]
-        .todos;
+      return props.todosStore.groups[props.todosStore.selectedGroup].todos;
     }
-    return [{ content: "Empty" }];
-  }, [props.todosStore.groups, props.todosStore.getIdSelectGroup]);
+    return [];
+  }, [props.todosStore.groups, props.todosStore.selectedGroup]);
 
   let deleteTodo = (id: number) => {
-    props.todosStore.deleteTodo(id, props.todosStore.getIdSelectGroup);
+    props.todosStore.deleteTodo(id, props.todosStore.selectedGroup as number);
   };
 
   const _renderTittle = React.useMemo(
     () =>
-      todosContainer.map((todo: any) => (
+      todosContainer.map((todo) => (
         <List.Item key={todo.id}>
           <Checkbox checked={todo.completed} />
-          {todo.content} {" "}
-          {todo.position} {" "}
-          {todo.remind_at}
+          {todo.content} {todo.position} {todo.remind_at}
           <Button danger onClick={() => deleteTodo(todo.id)}>
             <DeleteOutlined />
           </Button>

@@ -22,10 +22,6 @@ class TodosStore {
     this.groups = {};
   }
 
-  @computed get getIdSelectGroup() {
-    return this.selectedGroup;
-  }
-
   @computed get getGroups() {
     return Object.values(this.groups);
   }
