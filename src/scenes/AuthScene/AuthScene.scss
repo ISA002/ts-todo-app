@@ -1,0 +1,30 @@
+body {
+  background: #f0f2f5;
+}
+
+.AuthScene {
+  height: 100vh;
+  max-height: 100vh;
+
+  img {
+    float: right;
+    width: 30%;
+  }
+}
+
+.login-form {
+  margin: 10% auto;
+  width: 50%;
+  padding: 5rem 2rem;
+  background-color: #ffffffcc;
+  border-radius: 10px;
+}
+
+.AuthScene__form_input_username {
+  width: 60%;
+}
+
+.AuthScene__form_input_password {
+  width: 60%;
+}
+
