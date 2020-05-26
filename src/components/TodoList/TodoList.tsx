@@ -1,10 +1,10 @@
 import React from "react";
-import { List, Checkbox, Card, Button } from "antd";
-import { observer, inject } from "mobx-react";
-import { RouteComponentProps } from "react-router-dom";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { List, Card } from "antd";
+import { observer } from "mobx-react";
+import TodosStore, { sortingBy } from "../../store/stores/todosStore";
+import TodoItem from "./TodoItem/TodoItem";
 import { toJS } from "mobx";
-import TodosStore from "../../store/stores/todosStore";
+import { Todo } from "../../store/types";
 
 interface TodoListProps {
   todosStore: TodosStore;
@@ -21,26 +21,21 @@ const TodoList = (props: TodoListProps) => {
     return [];
   }, [props.todosStore.groups, props.todosStore.selectedGroup]);
 
-  let deleteTodo = (id: number) => {
-    props.todosStore.deleteTodo(id, props.todosStore.selectedGroup as number);
-  };
+  const sortedTitles = React.useMemo(
+    () => sortingBy<Todo>(Object.values(todosContainer), "desc", "id"),
+    [todosContainer]
+  );
 
   const _renderTittle = React.useMemo(
     () =>
-      todosContainer.map((todo) => (
-        <List.Item key={todo.id}>
-          <Checkbox checked={todo.completed} />
-          {todo.content} {todo.position} {todo.remind_at}
-          <Button danger onClick={() => deleteTodo(todo.id)}>
-            <DeleteOutlined />
-          </Button>
-          <Button>
-            <EditOutlined />
-          </Button>
-          <List.Item.Meta description={todo.created_at} />
-        </List.Item>
+      sortedTitles.map((key: number) => (
+        <TodoItem
+          key={key}
+          todo={todosContainer[key]}
+          todosStore={props.todosStore}
+        />
       )),
-    [todosContainer]
+    [todosContainer, sortedTitles]
   );
 
   return (

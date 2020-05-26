@@ -1,7 +1,6 @@
 import { postRequest } from "../../agent/";
 import commonStore from "./commonStore";
 import { observable, action, computed } from "mobx";
-import TodosStore from "./todosStore";
 
 class AuthStore {
   @observable inProgress = false;
@@ -42,11 +41,6 @@ class AuthStore {
       password: this.values.password,
     })
       .then(({ token }: any) => commonStore.setToken(token))
-      .catch(
-        action((error: any) => {
-          console.log("LoginError", error);
-        })
-      )
       .finally(
         action(() => {
           this.inProgress = false;
@@ -61,4 +55,4 @@ class AuthStore {
   }
 }
 
-export default new AuthStore();
+export default AuthStore;

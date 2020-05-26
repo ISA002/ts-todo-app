@@ -5,6 +5,7 @@ import Navbar from "./Navbar/Navbar";
 import { observer, inject } from "mobx-react";
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import "./AuthScene.scss";
+import { message } from "antd";
 
 interface AuthSceneProps extends RouteComponentProps {
   authStore: any;
@@ -13,31 +14,31 @@ interface AuthSceneProps extends RouteComponentProps {
 const AuthScene = (props: AuthSceneProps) => {
   const [loading, setLoading] = React.useState(false);
 
-  let onChangeFormStateUser = (event: any) => {
+  const onChangeFormStateUser = (event: any) => {
     props.authStore.setUsername(event.target.value);
   };
 
-  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      setLoading(true);
-      props.authStore.login().then(() => {
-        props.history.replace("/cabinet");
-        setLoading(false);
-      });
-    }
-  };
-
-  let onChangeFormStatePass = (event: any) => {
+  const onChangeFormStatePass = (event: any) => {
     props.authStore.setPassword(event.target.value);
   };
 
-  let handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (loading) return;
     setLoading(true);
-    props.authStore.login().then(() => {
-      props.history.replace("/cabinet");
-      setLoading(false);
-    });
+    props.authStore
+      .login()
+      .then(() => {
+        props.history.replace("/cabinet");
+        message.success("You have successfully logged in");
+      })
+      .catch(() => {
+        message.error("Encorrect data during login");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -48,6 +49,7 @@ const AuthScene = (props: AuthSceneProps) => {
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
+          onSubmitCapture={handleSubmit}
         >
           <div className="AuthScene_img">
             <img src="https://clck.ru/N2upC" alt="Loading..." />
@@ -92,11 +94,9 @@ const AuthScene = (props: AuthSceneProps) => {
 
           <Form.Item>
             <Button
-              onClick={handleSubmit}
               type="primary"
               htmlType="submit"
               className="login-form-button"
-              onKeyDown={onKeyDown}
               loading={loading}
             >
               Log in

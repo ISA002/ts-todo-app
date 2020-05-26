@@ -1,13 +1,31 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family:  "gotham-pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+@font-face {
+  font-family: "gotham-pro";
+  src: url("../src/assets/GothamPro.woff");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "gotham-pro";
+  src: url("../src/assets/GothamPro-Medium.woff");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "gotham-pro";
+  src: url("../src/assets/GothamPro-Bold.woff");
+  font-weight: 800;
 }

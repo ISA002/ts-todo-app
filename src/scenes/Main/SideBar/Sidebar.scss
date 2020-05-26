@@ -1,9 +1,5 @@
 .Sider__main {
-    max-height: 100vh;
-
-    .Sider__menu_addButton {
-        margin: 0 auto;
-    }
-
-    overflow: auto;
+  .ant-layout-sider-children {
+    padding-top: 55px; 
+  }
 }

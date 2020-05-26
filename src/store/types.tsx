@@ -10,20 +10,6 @@ export interface UserState {
   token: string | null;
 }
 
-export interface TodoState {
-  id: number;
-  content: string;
-  created_at: string;
-  remind_at: string;
-  position: number;
-  group: PrimaryKey;
-}
-
-export interface StoreRootState {
-  user: UserState;
-  todo: TodoState;
-}
-
 export interface Todo {
   id: PrimaryKey;
   content: string;
@@ -33,16 +19,13 @@ export interface Todo {
   group: PrimaryKey;
   completed: boolean;
 }
-export interface TodoFetch {
-  content: string;
-  remind_at: string | null;
-  group: PrimaryKey;
-  position: number;
-}
+
+export type PartialTodo = Partial<Todo>
+
 export interface TodoGroup {
   id: PrimaryKey;
   title: string;
-  todos: Todo[];
+  todos: Record<PrimaryKey, Todo>;
   user: number;
 }
 

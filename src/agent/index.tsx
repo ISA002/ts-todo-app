@@ -21,7 +21,9 @@ export const getRequest = (url: string, body = {}) => {
     if (response.ok) {
       return response.json();
     }
-    console.error("Error");
+    throw new Error("error");
+  }).catch((error: any) => {
+    console.error("getRequest", error);
   });
 };
 
@@ -34,7 +36,7 @@ export const postRequest = (url: string, body = {}) => {
     if (response.ok) {
       return response.json();
     }
-    console.error("Error");
+    throw new Error("error");
   }).catch((error: any) => {
     console.error("getRequestError", error);
   });
@@ -49,7 +51,9 @@ export const deleteRequest = (url: string, body = {}) => {
     if (response.ok) {
       return;
     }
-    console.error("Error");
+    throw new Error("error");
+  }).catch((error: any) => {
+    console.error("deleteRequest", error);
   });
 };
 
@@ -62,6 +66,8 @@ export const patchRequest = (url: string, body = {}) => {
     if (response.ok) {
       return response.json();
     }
-    console.error("Error");
-  });
+    throw new Error("error");
+  }).catch((error: any) => {
+    console.error("patchRequest", error);
+  });;
 };

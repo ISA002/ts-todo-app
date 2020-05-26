@@ -12,9 +12,10 @@ import Main from "../../scenes/Main/Main";
 import authStore from "../../store/stores/authStore";
 
 import TodosStore from "../../store/stores/todosStore";
+import AuthStore from "../../store/stores/authStore";
 
 const store = {
-  authStore,
+  authStore: new AuthStore(),
   todosStore: new TodosStore(),
 };
 
